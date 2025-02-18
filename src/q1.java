@@ -1,14 +1,12 @@
 import java.io.BufferedReader;
 import java.io.FileReader;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.TreeMap;
 import java.util.TreeSet;
 import java.util.concurrent.ThreadLocalRandom;
-import java.util.stream.Stream;
+import java.util.concurrent.Semaphore;
 
 public class q1 {
 
@@ -24,6 +22,12 @@ public class q1 {
             n = Integer.parseInt(args[1]);
             t = Integer.parseInt(args[2]);
             k = Integer.parseInt(args[3]);
+
+            // Do not accept input of n<=4
+            if(n<=4) {
+                System.out.println("ERROR grid size must be greater than 4x4");
+                return;
+            }
 
             // Instantiate some vars needed for parsing data from the freq.txt file
             BufferedReader br = new BufferedReader(new FileReader("../freq.txt"));
@@ -54,7 +58,7 @@ public class q1 {
                     dict.add(line);
                 }
                 br.close();
-            } catch (Exception e) {                        // Catch errors
+            } catch (Exception e) {                        // Catch exceptions
                 System.out.println("ERROR " +e);           // And print them to the console
                 e.printStackTrace();                       // Also print the stack trace
             }
@@ -68,58 +72,100 @@ public class q1 {
 
             // Print out the grid
             for(Cell[] cs : grid) {
-                for(Cell c : cs) {
+                for(Cell c : cs)
                     System.out.print(c.getValue());
-                }
                 System.out.println();
             }
-            System.out.println();
 
-            // // Create t threads using the wordSearchThread runnable
+            // Create t threads using the wordSearchThread runnable
             WordSearchThread wordSearchThread = new WordSearchThread(grid, k, dict);
             Thread[] threads = new Thread[t];
             for(int i=0; i<t; i++)
                 threads[i] = new Thread(wordSearchThread);
+
+            // Run all the threads
             for(Thread tr : threads)
                 tr.start();
-            Thread.sleep(1000);
             for(Thread tr : threads)
                 tr.join();
 
-        } catch (Exception e) {                        // Catch errors
+            // Print out the resulting wordLists of each cell
+            for(Cell[] cs : grid) {
+                for(Cell c : cs) {
+                    System.out.print("("+c.getX()+","+c.getY()+")");
+                    for(String s : c.getWordList())
+                        System.out.print(" "+s);
+                    System.out.println();
+                }
+            }
+
+        } catch (Exception e) {                        // Catch exceptions
             System.out.println("ERROR " +e);           // And print them to the console
             e.printStackTrace();                       // Also print the stack trace
         }
     }
 }
 
+// Class for storing all necessary info relating to a cell,
+// including the binary semaphore used to lock the cell.
 class Cell {
     private int x;
     private int y;
     private char value;
     private List<String> wordList;
+    private Semaphore s;
 
+    // Basic constructor
     public Cell (int x, int y, char value) {
         this.x = x;
         this.y = y;
         this.value = value;
         this.wordList = new ArrayList<String>();
+        this.s = new Semaphore(1);
     }
 
+    // Getters and setters for all primitives
     public int getX() { return x; }
     public void setX(int x) { this.x = x; }
     public int getY() { return y; }
     public void setY(int y) { this.y = y; }
     public char getValue() { return value; }
     public void setValue(char value) { this.value = value; }
+    
+    // Get wordList
+    public List<String> getWordList() { return wordList; }
+
+    // Add word to wordList, if it's not already there. The boolean
+    // return value isn't used, but it makes sense to include it
     public boolean addWord(String s) {
         if(wordList.contains(s))
             return false;
         wordList.add(s);
         return true;
     }
+
+    // Acquires the semaphore lock for this cell. If the semaphore is
+    // already locked (there are no permits available), the thread will
+    // be blocked until the lock is released
+    public void up() {
+        try {
+            s.acquire();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // Releases the semaphore lock for this cell, and notifies all threads
+    // that are waiting. Should only be called by the thread that currently
+    // controls the lock
+    public void down() {
+        s.release();
+    }
 }
 
+// Class to encapsulate all word searching behaviour done by a thread. This
+// class extends runnable, and will be used to populate the .start() method
+// of the threads created and run by the main thread.
 class WordSearchThread implements Runnable {
 
     private Cell[][] grid;
@@ -127,6 +173,7 @@ class WordSearchThread implements Runnable {
     private ThreadLocalRandom rng;
     private TreeSet<String> dict;
 
+    // Basic constructor
     public WordSearchThread(Cell[][] grid, int numCells, TreeSet<String> dict) {
         this.grid = grid;
         this.numCells = numCells;
@@ -134,52 +181,78 @@ class WordSearchThread implements Runnable {
         this.dict = dict;
     }
 
+    // This method will replace the thread.start() method of the threads
+    // which are created using an instance of this class in the constructor.
+    // This is how my threads are created and run by the main thread.
     @Override
     public void run() {
-        int numMoves, lastMove;
-        List<Integer> sequence;
-        List<Integer> possibleMoves;
-        for(int i=0; i<numCells; i++) {
-            sequence = new ArrayList<Integer>();
-            possibleMoves = new ArrayList<Integer>();
-            lastMove = rng.nextInt(grid.length*grid.length);
-            sequence.add(lastMove);
-            numMoves = 1;
-            while(numMoves <= 7) {
-                possibleMoves = getSurroundingIndices(lastMove, grid.length);
-                possibleMoves.removeAll(sequence);
-                if(possibleMoves.isEmpty())
-                    break;
-                lastMove = possibleMoves.get(rng.nextInt(possibleMoves.size()));
+        try {
+            // Instantiating a few uninitialsed variables
+            int lastMove;
+            List<Integer> sequence;
+            List<Integer> possibleMoves;
+
+            // Select numCells random starting points, and search for words
+            // based on a random move sequence from these starting positions
+            for(int i=0; i<numCells; i++) {
+                sequence = new ArrayList<Integer>();
+                possibleMoves = new ArrayList<Integer>();
+
+                // Select a random starting cell and add it to the new sequence
+                lastMove = rng.nextInt(grid.length*grid.length);
                 sequence.add(lastMove);
-                numMoves++;
-            }
 
-            String potentialWord = "";
-            String subWord = "";
-
-            // Acquire lock for all cells in sequence, in ASCENDING order
-
-            for(int j : sequence) {
-                potentialWord += grid[j/grid.length][j%grid.length].getValue();
-            }
-            for(int j=3; j<sequence.size(); j++) {
-                subWord = potentialWord.substring(0, j);
-                if(dict.contains(subWord.toLowerCase())) {
-                    // Legit word found
-                    System.out.println(subWord);
+                // Randomly elect 7 valid moves from this position, adding
+                // each selected index to the sequence.
+                for(int n=1; n <= 7; n++) {
+                    // Make a list of all valid moves and remove already used indices
+                    possibleMoves = getSurroundingIndices(lastMove, grid.length);
+                    possibleMoves.removeAll(sequence);
+                    if(possibleMoves.isEmpty()) // Stop if no possible moves left
+                        break;
+                    lastMove = possibleMoves.get(rng.nextInt(possibleMoves.size()));
+                    sequence.add(lastMove);
                 }
-            }
-            // if so, add the word to the wordList for all i cells
-            // (assuming its not already in the list)
 
-            // sleep for 20ms
-            try {
-                Thread.sleep(20);
-            } catch (Exception e) {                        // Catch errors
-                System.out.println("ERROR " +e);           // And print them to the console
-                e.printStackTrace();                       // Also print the stack trace
+                // Instantiate two new empty strings
+                String potentialWord = "";
+                String subWord = "";
+
+                // Acquire lock for all cells in sequence, in ASCENDING order.
+                // Acquiring the locks in ascending order is abolutely essential
+                // for preventing deadlock, as explained in q1.txt
+                TreeSet<Integer> sortedSeq = new TreeSet<Integer>(sequence);
+                for(int index : sortedSeq)
+                    grid[index/grid.length][index%grid.length].up();
+
+                // Build a string from the cell values at each index in the sequence
+                for(int j : sequence)
+                    potentialWord += grid[j/grid.length][j%grid.length].getValue();
+
+                // Search for valid substrings of this string, with length 3-8 inclusive
+                for(int j=3; j<=sequence.size(); j++) {
+                    subWord = potentialWord.substring(0, j);
+                    
+                    // If legit word, add it to the word list for all the involved cells
+                    if(dict.contains(subWord.toLowerCase())) {
+                        int currIndex;
+                        for(int k=0; k<j; k++) {
+                            currIndex = sequence.get(k);
+                            grid[currIndex/grid.length][currIndex%grid.length].addWord(subWord);
+                        }
+                    }
+                }
+                
+                // Release the locks and notify any sleeping threads
+                for(int index : sortedSeq)
+                    grid[index/grid.length][index%grid.length].down();
+
+                // sleep for 20ms
+                    Thread.sleep(20);
             }
+        } catch (Exception e) {                        // Catch exceptions
+            System.out.println("ERROR " +e);           // And print them to the console
+            e.printStackTrace();                       // Also print the stack trace
         }
     }
 
