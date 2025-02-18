@@ -1,0 +1,31 @@
+PS C:\...\src>java q1 123 5 3 500
+ashei
+htite
+hcani
+snstr
+tstyp
+(0,0) tha ash sta hat hath has hast tas ast ashcan ita sat ahs sah sahh hats sha shat tash acta sati sata
+(0,1) hts ash sta cts shi shia sht ist isth has hast sit sitch ichs tas ast tsi ihs hits site sie cis shin chs ashcan aits eths sat scats ahs she shee sah sahh shit hats sha shat his tash shh tis nis ish sin sati sata ais sith
+(0,2) hts ash het hie the shi shia sht thein hei eth hit ihs hia hits nth shin eths she shee shit his hee theins tash hath ish hic snath snathe       
+(0,3) het hie the thein nee hei ante eth neet tee site sie tie etic she shee een eta hee theins eten snathe eths
+(0,4) tie nei ita tien hei neti titi
+(1,0) tha hat hath ich isth has hast sch ichs chs shh ash ashcan ahs sah sahh hats sha shat tash ish ach hts tath aitch tch
+(1,1) nit hts tha tas sta hat hath cts the thein ist isth hast sit sitch hit ast itch tsi hits act tie ita ait aits sat scat scats sht nat aith hats shat tin tine tash tan sct acta tat init sati cit sata sith tath stat tit aitch tch
+(1,2) nit ait sai sain saic hie ich shi shia thein ist isth hei inti sit sitch ichs hit itch tsi ihs cia hia hits site sie ins cis shin tie etic tic ita aits cit cite aith shit his sci tin tine theins tis int inta nis ish init tai tait hic sin sati itai tics ais sith tit aitch
+(1,3) tit tite ait het sht eta tan rit rita int inti ant ante eth neet hit the nth tee sit site tie etic tic tat cit cite eths ita tas tasty shit tien net neti thein theins tis nit tin eten inta tait ate snath snathe titi ten tent itai tics init tnt
+(1,4) tite ens eta nee nei neet tee tie cite eth eths shee een tien rie net neti tine rine hee eir ane eten ate ten tent
+(2,0) hath sitch itch ich shh sch sht aith sahh tanh chn ach chs sith
+(2,1) saic cts ich sch sitch ichs cst itch cia act cis chs etic tic ashcan cit cite scat scats anc chn sci ach sac can cans canst sct acta cast hic tics aitch tch
+(2,2) ait pta nast sai sain tas ast saic shia eta tan rita ant ante ass asst nasty cia hia san sant act ans ashcan sat tat aits scat scats ita assn anc nat tasty aith tanh ach sac ani can cans canst ane nan nant sta att ants tans inta acta cast tai tait ate snath snathe itai sata ais antsy tath stat aitch attn
+(2,3) nit sain ens thein tan nee int inti ant ante nei neet nast nasty intr nth ins shin prn ashcan een tien net neti tin tine rin prin rine theins nat ani ane nan nant eten inta nis init sin ten tent tnt
+(2,4) tit tite rti rit rita int inti nei nit intr ita rie tie rin prin rine eir tin ani tien init neti titi itai ins
+(3,0) tss sch cst ans shh scat scats sht sci chs ants tics
+(3,1) nast tnt san sant ant ans assn anc nat tan tanh chn can cans canst nan nant ants tans snath snathe antsy attn
+(3,2) tst nast sai sain tas ast saic ens tss ass asst nasty san sant str ins cst sat pts assn tasty prys theins sac sci cans canst sct cast snath snathe sty ptts sata ants antsy sta stat
+(3,3) tit tite tyr tst pta nast ast rti tty try nit int intr rpt tryt str tryp sat tat pts tan ita tyt trp pty tss tanh rit ptt ptts nat tin canst typ att tans cast tai tait titi ant tent tath sta stat tnt attn
+(3,4) pry tyr rti try rit rita intr rpt tryt str tryp prn trp pyr prys rie rin prin rine eir
+(4,0) tss tst tnt cst sant ant ants
+(4,1) tss tst ass asst assn sty ans ptts ants tans
+(4,2) tst tty tnt tss tyr ast asst nast nasty tryt ant cst tyt sty tasty ptt ptts nant att typ ants antsy attn
+(4,3) pry tyr tty try nasty tryt tryp tyt sty tasty pty pyr prys typ antsy
+(4,4) pry pta rpt tryp prn pts trp pty pyr prys prin ptt ptts typ

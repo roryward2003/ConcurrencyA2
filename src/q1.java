@@ -28,7 +28,7 @@ public class q1 {
                 throw new IllegalArgumentException("Grid size must be greater than 4x4");
 
             // Instantiate some vars needed for parsing data from the freq.txt file
-            BufferedReader br = new BufferedReader(new FileReader("../freq.txt"));
+            BufferedReader br = new BufferedReader(new FileReader("freq.txt"));
             TreeMap<Integer, Character> freqs = new TreeMap<Integer, Character>();
             String line, character;
             int freq, freqSum = 0;
@@ -41,13 +41,13 @@ public class q1 {
                 character = line.split(" ")[0];
                 freq = Integer.parseInt(line.split(" +")[1]);
                 freqSum += freq;
-                freqs.put(freqSum, character.charAt(0));
+                freqs.put(freqSum, Character.toLowerCase(character.charAt(0)));
             }
             br.close();
 
             // Initialise dictionary for lookups later
             TreeSet<String> dict = new TreeSet<String>();
-            br = new BufferedReader(new FileReader("../dict.txt"));
+            br = new BufferedReader(new FileReader("dict.txt"));
             while(br.ready()) {
                 line = br.readLine();
                 if(line == "")
@@ -227,7 +227,7 @@ class WordSearchThread implements Runnable {
                     subWord = potentialWord.substring(0, j);
                     
                     // If legit word, add it to the word list for all the involved cells
-                    if(dict.contains(subWord.toLowerCase())) {
+                    if(dict.contains(subWord)) {
                         int currIndex;
                         for(int k=0; k<j; k++) {
                             currIndex = sequence.get(k);
