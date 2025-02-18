@@ -10,7 +10,7 @@ import java.util.concurrent.Semaphore;
 
 public class q1 {
 
-    private static long s;
+    private static int s;
     private static int n;
     private static int t;
     private static int k;
@@ -18,16 +18,14 @@ public class q1 {
     public static void main(String[] args) {
         try {
             // Initialise input parameters from the command line
-            s = Long.parseLong(args[0]);
+            s = Integer.parseInt(args[0]);
             n = Integer.parseInt(args[1]);
             t = Integer.parseInt(args[2]);
             k = Integer.parseInt(args[3]);
 
             // Do not accept input of n<=4
-            if(n<=4) {
-                System.out.println("ERROR grid size must be greater than 4x4");
-                return;
-            }
+            if(n<=4)
+                throw new IllegalArgumentException("Grid size must be greater than 4x4");
 
             // Instantiate some vars needed for parsing data from the freq.txt file
             BufferedReader br = new BufferedReader(new FileReader("../freq.txt"));
@@ -49,19 +47,14 @@ public class q1 {
 
             // Initialise dictionary for lookups later
             TreeSet<String> dict = new TreeSet<String>();
-            try {
-                br = new BufferedReader(new FileReader("../dict.txt"));
-                while(br.ready()) {
-                    line = br.readLine();
-                    if(line == "")
-                        break;
-                    dict.add(line);
-                }
-                br.close();
-            } catch (Exception e) {                        // Catch exceptions
-                System.out.println("ERROR " +e);           // And print them to the console
-                e.printStackTrace();                       // Also print the stack trace
+            br = new BufferedReader(new FileReader("../dict.txt"));
+            while(br.ready()) {
+                line = br.readLine();
+                if(line == "")
+                    break;
+                dict.add(line);
             }
+            br.close();
 
             // Create and initialise n*n grid of seeded random characters, by frequency
             Random rng = new Random(s);

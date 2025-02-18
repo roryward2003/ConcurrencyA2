@@ -1,0 +1,21 @@
+In order to guarantee that my program does not deadlock, I considered
+the few situations where deadlock could arise.
+
+Firstly, as I am using semaphores for my synchronization strategy, I had
+to ensure that I avoided the "lost wakeup" problem. To avoid this, I just
+used the Java.util.concurrent API implementation of semaphores, as this
+API implementation ensures that checking the semaphore and going to sleep
+appears as one atomic action.
+
+Another deadlock scenario could arise due to the fact that each thread
+will be acquiring multiple locks. For example, consider the scanario where
+T0 wants to acquire the locks for cells (1,2), (2,3) and (2,4), whilst
+T1 wants to acquire the locks for cells (3,4), (2,4) and (2,3). If both
+threads get their first two locks, then neither thread can get their final
+lock until the other is finished. This causes deadlock.
+
+This issue seems very complex, but can be solved rather simply by ensuring
+that all threads acquire locks in a sequence in the same order. I chose to
+use ascending order of index, where index = (row*n)+col. This ensures that
+if multiple threads try to acquire the same locks, whoever acquires the
+first lock under contention, cannot be blocked by the threads it beat out.
