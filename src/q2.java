@@ -1,6 +1,7 @@
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
-import java.util.concurrent.LinkedBlockingQueue;
+import java.util.Queue;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class q2 {
@@ -30,7 +31,7 @@ public class q2 {
             Thread[] threads = new Thread[k+6];
             threads[0] = new Thread(new Professor(taq, gsl));
             for(int i=1; i<=k; i++)
-                threads[i] = new Thread(new TA(taq, q));
+                threads[i] = new Thread(new TA(taq, q), ""+i);
             for(int i=k+1; i<threads.length; i++)
                 threads[i] = new Thread(new GradStudent(gsl));
 
@@ -97,7 +98,7 @@ class TA implements Runnable {
         try {
             while(true) {                              // q% chance of coming up with a question
                 if(rng.nextInt(100) < q) {
-                    System.out.println("TA "+Thread.currentThread().threadId()+" has come up with a question");
+                    System.out.println("TA "+Thread.currentThread().getName()+" has come up with a question");
                     taq.question();                    // Handles question behaviour
                 }
                 Thread.sleep(1000);             // Wait one second between each potential question
@@ -141,12 +142,12 @@ class GradStudent implements Runnable {
 // and Professor interactions through a TASession monitor.
 class TAQueue {
     // Monitor references and local variables
-    private LinkedBlockingQueue<Thread> q;
+    private Queue<Thread> q;
     private TASession tas;
 
     // Basic constructor
     public TAQueue(TASession tas) {
-        this.q = new LinkedBlockingQueue<Thread>();
+        this.q = new LinkedList<Thread>();
         this.tas = tas;
     }
 
@@ -187,8 +188,8 @@ class TAQueue {
             }
 
             // Inidicate which TAs have been answered
-            System.out.println("TAs "+q.remove().threadId()+" "+q.remove().threadId()
-                +" and "+q.remove().threadId()+" have been answered");
+            System.out.println("TAs "+q.remove().getName()+" "+q.remove().getName()
+                +" and "+q.remove().getName()+" have been answered");
 
             // Notify the TAs that their questions may have been answered
             notifyAll();

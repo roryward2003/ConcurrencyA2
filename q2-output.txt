@@ -1,119 +1,119 @@
-PS C:\...\src>java q2 9 10
+PS C:\...\src>java q2 9 10 
 P goes to sleep
-TA 29 has come up with a question
-TA 27 has come up with a question
-TA 22 has come up with a question
+TA 8 has come up with a question
+TA 6 has come up with a question
+TA 1 has come up with a question
 P wakes
 TA questions being answered
-TAs 29 27 and 22 have been answered
+TAs 8 6 and 1 have been answered
 P goes to sleep
-TA 23 has come up with a question
-TA 26 has come up with a question
-TA 27 has come up with a question
+TA 2 has come up with a question
+TA 5 has come up with a question
+TA 6 has come up with a question
 P wakes
 TA questions being answered
-TAs 23 26 and 27 have been answered
+TAs 2 5 and 6 have been answered
 P goes to sleep
-TA 23 has come up with a question
-TA 22 has come up with a question
-TA 26 has come up with a question
+TA 2 has come up with a question
+TA 1 has come up with a question
+TA 5 has come up with a question
 P wakes
 TA questions being answered
-TAs 23 22 and 26 have been answered
+TAs 2 1 and 5 have been answered
 P goes to sleep
-TA 28 has come up with a question
-TA 30 has come up with a question
+TA 7 has come up with a question
+TA 9 has come up with a question
 Grad Student 1 has arrived
-TA 26 has come up with a question
+TA 5 has come up with a question
 P wakes
 TA questions being answered
-TAs 28 30 and 26 have been answered
+TAs 7 9 and 5 have been answered
 P goes to sleep
-TA 22 has come up with a question
-TA 29 has come up with a question
-TA 24 has come up with a question
+TA 1 has come up with a question
+TA 8 has come up with a question
+TA 3 has come up with a question
 P wakes
 TA questions being answered
-TA 27 has come up with a question
-TA 30 has come up with a question
-TAs 22 29 and 24 have been answered
+TA 6 has come up with a question
+TA 9 has come up with a question
+TAs 1 8 and 3 have been answered
 P goes to sleep
-TA 25 has come up with a question
+TA 4 has come up with a question
 P wakes
 TA questions being answered
-TAs 30 27 and 25 have been answered
+TAs 9 6 and 4 have been answered
 P goes to sleep
-TA 26 has come up with a question
-TA 30 has come up with a question
-TA 25 has come up with a question
+TA 5 has come up with a question
+TA 9 has come up with a question
+TA 4 has come up with a question
 P wakes
 TA questions being answered
-TAs 26 30 and 25 have been answered
+TAs 5 9 and 4 have been answered
 P goes to sleep
-TA 25 has come up with a question
+TA 4 has come up with a question
 Grad Student 2 has arrived
-TA 28 has come up with a question
-TA 26 has come up with a question
+TA 7 has come up with a question
+TA 5 has come up with a question
 P wakes
 TA questions being answered
-TAs 25 28 and 26 have been answered
+TAs 4 7 and 5 have been answered
 P goes to sleep
-TA 24 has come up with a question
-TA 29 has come up with a question
-TA 28 has come up with a question
+TA 8 has come up with a question
+TA 3 has come up with a question
+TA 7 has come up with a question
 P wakes
 TA questions being answered
-TAs 24 29 and 28 have been answered
+TAs 8 3 and 7 have been answered
 P goes to sleep
-TA 24 has come up with a question
-TA 26 has come up with a question
-TA 23 has come up with a question
+TA 3 has come up with a question
+TA 5 has come up with a question
+TA 2 has come up with a question
 P wakes
 TA questions being answered
-TAs 24 26 and 23 have been answered
+TAs 3 5 and 2 have been answered
 P goes to sleep
 Grad Student 3 has arrived
-TA 26 has come up with a question
-TA 25 has come up with a question
-TA 29 has come up with a question
+TA 5 has come up with a question
+TA 4 has come up with a question
+TA 8 has come up with a question
 P wakes
 TA questions being answered
-TAs 26 25 and 29 have been answered
+TAs 5 4 and 8 have been answered
 P goes to sleep
-TA 23 has come up with a question
-TA 26 has come up with a question
-TA 29 has come up with a question
+TA 2 has come up with a question
+TA 5 has come up with a question
+TA 8 has come up with a question
 P wakes
 TA questions being answered
-TAs 23 26 and 29 have been answered
+TAs 2 5 and 8 have been answered
 P goes to sleep
-TA 27 has come up with a question
-TA 29 has come up with a question
-TA 22 has come up with a question
+TA 6 has come up with a question
+TA 8 has come up with a question
+TA 1 has come up with a question
 P wakes
 TA questions being answered
-TAs 27 29 and 22 have been answered
+TAs 6 8 and 1 have been answered
 P goes to sleep
 Grad Student 4 has arrived
-TA 30 has come up with a question
-TA 27 has come up with a question
-TA 29 has come up with a question
+TA 9 has come up with a question
+TA 6 has come up with a question
+TA 8 has come up with a question
 P wakes
 TA questions being answered
-TAs 30 27 and 29 have been answered
+TAs 9 6 and 8 have been answered
 P goes to sleep
-TA 24 has come up with a question
+TA 3 has come up with a question
 Grad Student 5 has arrived
-TA 25 has come up with a question
-TA 30 has come up with a question
+TA 4 has come up with a question
+TA 9 has come up with a question
 P wakes
 TA questions being answered
 TA Session interrupted by grad student
 P wakes their grad students
 All grad students have been woken
-TA 23 has come up with a question
-TA 26 has come up with a question
-TA 28 has come up with a question
-TA 27 has come up with a question
-TA 22 has come up with a question
-TA 29 has come up with a question
+TA 2 has come up with a question
+TA 5 has come up with a question
+TA 7 has come up with a question
+TA 6 has come up with a question
+TA 1 has come up with a question
+TA 8 has come up with a question

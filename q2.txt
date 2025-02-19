@@ -1,0 +1,57 @@
+If java used SIGNAL_AND_WAIT semantics as opposed to SIGNAL_AND_CONTINUE,
+there would not need to be any change at all to my implementation. There
+are 4 situations where I notify other threads of a change to a condition
+variable that they may be waiting on, and I will explain briefly whay each
+of them would not require any changes to work with SIGNAL_AND_WAIT.
+
+1. Line 162 notifyAll() within the TAQueue question() method
+
+    In this situation, the third TA to join the queue would notify the
+professor, and the two previous TAs, of a change to the condition variable
+which now allows the professor to handle their questions. SIGNAL_AND_WAIT
+semantics would now allow the professor to answer the questions, or for
+the two other TAs to begin waiting to be removed from the queue, whereas
+SIGNAL_AND_CONTINUE would allow the current TA to begin waiting to be
+removed from the queue. In either case, the 3 TAs wait until the professor
+has removed them from the queue after 500ms of processing, before they can
+continue. They don't make changes in this time, so both appear identical.
+
+2. Line 195 notifyAll() within the TAQueue waitForQsThenAnswer() method
+
+    Here the Professor is notifying any waiting TAs that their question
+may have been answered, before returning from the method. Any thread that
+could potentially get the lock next, professor or TA, is just going to
+revoke the lock, or simply go straight back to waiting if they are a TA
+who happened to come up with a question during the answering session and
+must still wait. Regardless of the ordering here, my implementation will
+do the same thing. The only situation where ordering could matter would be
+if another thread had called the waitForQsThenAnswer() method, which is
+impossible based on my implementation.
+
+3. Line 247 notifyAll() within the GradStudentList wakeUpGrads() method
+
+    Here the Professor is notifying the 4 sleeping Grad Students that they
+must wake up and begin research with him. With SIGNAL_AND_CONTINUE, the
+Professor would now immediately revoke the lock and do nothing. Contrarily
+with SIGNAL_AND_WAIT the grad students would continue waking up and then
+removing themselves from the list, before indicating that all grad students
+are awake once then final one removes themself. This is differing behaviour
+between the two semantic approaches, however either way the Professor is
+simply doing nothing so once again, my appraoch needn't change.
+
+4. Line 287 notify() within the TASession interruptNextSession() method
+
+    Here the Grad Student caller is notifying the Professor that all the
+grad students have arrived, and they are ready to start researching. It is
+important to note that this notify will only have an impact if the Professor
+happens to be in a TA session actively answering their questions. In the
+vast majority of situations this notify will do nothing, regardless of the
+semantic style in use. In the rare case where the Professor is answering
+questions, SIGNAL_AND_CONTINUE will cause the TA to immediately revoke the
+lock. This allows the Professor to subsequently abandon the TA session.
+SIGNAL_AND_WAIT would instead allow the Professor to abandon the TA Session
+first, followed by the TA regaining and immediately revoking the lock.
+Although these orderings are different, there are yet again no implications
+to switching the ordering of these two return statements, as there are no
+other instructions between regaining the lock and revoking it for either
+thread.
